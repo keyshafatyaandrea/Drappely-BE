@@ -71,7 +71,6 @@ class TransactionController extends Controller
                     ], 404);
                 }
 
-                //proteksi penanganan method hasEnoughStock
                 if (method_exists($product, 'hasEnoughStock')) {
                     if (!$product->hasEnoughStock($item['quantity'])) {
                         DB::rollBack();
@@ -103,8 +102,6 @@ class TransactionController extends Controller
                 $subtotal += $itemSubtotal;
                 $totalItems += $item['quantity'];
 
-                // `[]` di sini berarti masukin item baru ke array `$itemsDetail`.
-                // Ini array normal PHP, bukan pemanggilan method.
                 $itemsDetail[] = [
                     'product' => $product,
                     'quantity' => $item['quantity'],
@@ -120,9 +117,6 @@ class TransactionController extends Controller
             $tax = $afterDiscount * ($taxPercentage / 100);
             $totalAmount = $afterDiscount + $tax;
 
-            // INSERT Transaction record
-            // `Transaction::create([...])` pake array buat field yang mau disimpen ke DB.
-            // `auth()->id()` itu pemanggilan method auth, jadi di sini pakai `->`.
             $transaction = Transaction::create([
                 'staff_id' => auth()->id() ?? 1, // Fallback ke id 1 kalo testing tanpa login token
                 'total_items' => $totalItems,
@@ -265,10 +259,6 @@ class TransactionController extends Controller
         ]);
     }
 
-    /**
-     * GET /api/dashboard/recent-transactions
-     * Return recent transaction history (per transaction, not aggregated by day)
-     */
     public function recentTransactions(Request $request)
     {
         $limit = (int) $request->input('limit', 10);
