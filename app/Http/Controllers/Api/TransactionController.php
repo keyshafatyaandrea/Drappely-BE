@@ -18,9 +18,7 @@ class TransactionController extends Controller
         $endDate = $request->input('end_date');
         $staffId = $request->input('staff_id');
 
-        // pake with biar relasi langsung ke-load, jadi response udah include
-        // data staff sama product detail tanpa harus ngequery lagi
-        // `->` itu artinya kita manggil method di object/hasil query sebelumnya
+        
         $query = Transaction::with('staff', 'details.product');
 
         if ($startDate && $endDate) {
@@ -137,9 +135,8 @@ class TransactionController extends Controller
                 'transaction_date' => now(),
             ]);
 
-            // INSERT transaction details
+            // insert transaction details
             foreach ($itemsDetail as $detail) {
-                // lagi pake array untuk input data detail transaksi.
                 TransactionDetail::create([
                     'transaction_id' => $transaction->id,
                     'product_id' => $detail['product']->id,
@@ -149,7 +146,7 @@ class TransactionController extends Controller
                 ]);
             }
 
-            //KURANGI STOK PRODUK
+            //mengurangi stock product
             foreach ($validated['items'] as $item) {
                 $product = Product::find($item['product_id']);
                 if (method_exists($product, 'decreaseStock')) {
@@ -216,7 +213,7 @@ class TransactionController extends Controller
             $analytics[] = [
                 'date' => $date->format('d M'),
                 'day_name' => $date->format('D'),
-                'sales' => floatval($revenue), // 👈 DIGANTI ke 'sales' agar singkron dengan dataKey="sales" di React Admin
+                'sales' => floatval($revenue),
             ];
         }
 
