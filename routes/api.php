@@ -21,9 +21,7 @@ Route::group(['prefix' => 'auth'], function () {
     });
 });
 
-// crud product
-// `Route::get(..., [ProductController::class, 'index'])` itu cara Laravel
-// bilang: pakai ProductController terus jalankan method index.
+
 Route::get('/products', [ProductController::class, 'index']);
 Route::post('products', [ProductController::class, 'store']);  
 Route::get('products/{id}', [ProductController::class, 'show']);
