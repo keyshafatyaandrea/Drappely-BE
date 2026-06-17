@@ -12,8 +12,6 @@ Route::group(['prefix' => 'auth'], function () {
 
     Route::post('login', [AuthController::class, 'login']);
 
-    // route ini cuma bisa diakses kalo udah login.
-    // `->` di sini artinya kita panggil method dari object
     Route::middleware('auth:api')->group(function () {
         Route::post('register', [AuthController::class, 'register']);
         Route::get('user', [AuthController::class, 'user']);
