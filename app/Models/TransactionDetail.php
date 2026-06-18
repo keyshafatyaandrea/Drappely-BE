@@ -48,7 +48,7 @@ class TransactionDetail extends Model
         return 0;
     }
 
-    //format display
+    //ubah angka nya jadi rupiah yang rapi
     public function getFormattedPrice(): string
     {
         return 'Rp ' . number_format($this->price, 0, ',', '.');
