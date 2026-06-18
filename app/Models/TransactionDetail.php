@@ -38,7 +38,7 @@ class TransactionDetail extends Model
         return floatval($this->quantity) * floatval($this->price);
     }
 
-    //mengambil provit dari detail
+    //mengambil provit / keuntungan dari detail
     public function getProfit(): float
     {
         if ($this->product) {
