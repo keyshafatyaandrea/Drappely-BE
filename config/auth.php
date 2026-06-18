@@ -15,7 +15,7 @@ return [
         ],
 
         'api' => [
-            'driver' => 'jwt', // guard API di sini pake JWT, bukan Sanctum.
+            'driver' => 'jwt',
             'provider' => 'users',
         ],
     ],
